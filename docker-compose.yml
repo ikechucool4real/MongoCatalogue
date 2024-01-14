@@ -28,3 +28,8 @@ services:
     command: ["sh", "-c", "while ! nc -z mongodb 27017; do sleep 1; done"]
     depends_on:
       - mongodb
+
+# Optional: Stop and remove existing containers before starting the services
+  stop-and-remove:
+    image: alpine:latest
+    command: sh -c "docker-compose down && exit 0"
