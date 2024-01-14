@@ -1,8 +1,10 @@
 pipeline {
     agent {
-        docker { image 'jenkins/jenkins' }
+        label 'linux'
     }
-
+    environment{
+        DOCKERHUB_CREDENTIALS = credentials('kaychucool')
+    }
     stages {
         stage('Build') {
             steps {
