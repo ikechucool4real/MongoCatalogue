@@ -6,14 +6,6 @@ pipeline {
     }
 
     stages {
-        stage('Create Data Directory') {
-            steps {
-                script {
-                    sh 'mkdir data'
-                }
-            }
-        }
-
         stage('Run and Import MongoDB Data') {
             steps {
                 script {
