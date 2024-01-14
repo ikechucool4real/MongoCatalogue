@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  mongodb:
+    image: mongo:3.6
+    container_name: mongodb
+    volumes:
+      - "$PWD/data:/data/db"
+      - "$PWD/catalogue:/catalogue"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=restheart
+      - MONGO_INITDB_ROOT_PASSWORD=R3ste4rt!
+    command: mongod --bind_ip_all --auth
+
+  restheart:
+    image: softinstigate/restheart:4.1.0
+    container_name: restheart
+    ports:
+      - "80:8080"
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+
+# Optional: If you want to ensure MongoDB is ready before executing mongoimport
+  wait-mongo:
+    image: mongo:3.6
+    command: ["sh", "-c", "while ! nc -z mongodb 27017; do sleep 1; done"]
+    depends_on:
+      - mongodb
